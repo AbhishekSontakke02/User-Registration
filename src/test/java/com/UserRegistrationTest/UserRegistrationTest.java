@@ -120,4 +120,19 @@ public class UserRegistrationTest {
         boolean result = userRegistration.validatePasswordRule4("Password1");
         Assertions.assertFalse(result);
     }
+
+    // Full Password Validation Test
+    @Test
+    public void givenPassword_whenAllRulesPassed_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePassword("Password1!");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenPassword_whenAnyRuleFails_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePassword("Pass1!");
+        Assertions.assertFalse(result);
+    }
 }

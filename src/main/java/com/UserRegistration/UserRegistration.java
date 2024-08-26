@@ -32,4 +32,11 @@ public class UserRegistration {
     public boolean validatePasswordRule4(String password) {
         return password.matches("^(?=.*[!@#$%^&*(),.?\":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,}$");
     }
+
+    public boolean validatePassword(String password) {
+        return validatePasswordRule1(password) &&
+                validatePasswordRule2(password) &&
+                validatePasswordRule3(password) &&
+                validatePasswordRule4(password);
+    }
 }
