@@ -90,4 +90,20 @@ public class UserRegistrationTest {
         boolean result = userRegistration.validatePasswordRule2("password1!");
         Assertions.assertFalse(result);
     }
+
+    // Password Rule 3 Test
+    @Test
+    public void givenPassword_whenContainsNumeric_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule3("Password1!");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenPassword_whenNoNumeric_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule3("Password!");
+        Assertions.assertFalse(result);
+        Assertions.assertFalse(result);
+    }
 }
