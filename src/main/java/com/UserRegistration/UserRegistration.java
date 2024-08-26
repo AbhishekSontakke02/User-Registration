@@ -20,4 +20,8 @@ public class UserRegistration {
     public boolean validatePasswordRule1(String password) {
         return password.length() >= 8;
     }
+
+    public boolean validatePasswordRule2(String password) {
+        return password.matches(".*[A-Z].*");
+    }
 }

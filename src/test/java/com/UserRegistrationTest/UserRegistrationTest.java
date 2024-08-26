@@ -75,4 +75,19 @@ public class UserRegistrationTest {
         boolean result = userRegistration.validatePasswordRule1("Pass1!");
         Assertions.assertFalse(result);
     }
+
+    // Password Rule 2 Test
+    @Test
+    public void givenPassword_whenContainsUpperCase_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule2("Password1!");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenPassword_whenNoUpperCase_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule2("password1!");
+        Assertions.assertFalse(result);
+    }
 }
