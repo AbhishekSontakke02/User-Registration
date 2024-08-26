@@ -60,4 +60,19 @@ public class UserRegistrationTest {
         boolean result = userRegistration.validateMobileNumber("919919819801");
         Assertions.assertFalse(result);
     }
+
+    // Password Rule 1 Test
+    @Test
+    public void givenPassword_whenValidLength_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule1("Password1!");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenPassword_whenInvalidLength_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule1("Pass1!");
+        Assertions.assertFalse(result);
+    }
 }

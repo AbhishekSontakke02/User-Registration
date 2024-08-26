@@ -16,4 +16,8 @@ public class UserRegistration {
     public boolean validateMobileNumber(String mobileNumber) {
         return mobileNumber.matches("^[0-9]{2} [0-9]{10}$");
     }
+
+    public boolean validatePasswordRule1(String password) {
+        return password.length() >= 8;
+    }
 }
