@@ -18,4 +18,18 @@ public class UserRegistrationTest {
         boolean result = userRegistration.validateFirstName("ab");
         Assertions.assertFalse(result);
     }
+
+    @Test
+    public void givenLastName_whenValid_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validateLastName("Sontakke");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenLastName_WhenInvalid_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validateLastName("so");
+        Assertions.assertFalse(result);
+    }
 }
