@@ -104,6 +104,20 @@ public class UserRegistrationTest {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validatePasswordRule3("Password!");
         Assertions.assertFalse(result);
+    }
+
+    // Password Rule 4 Test
+    @Test
+    public void givenPassword_whenContainsSpecialCharacter_shouldReturnTrue() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule4("Password1!");
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    public void givenPassword_whenNoSpecialCharacter_shouldReturnFalse() {
+        UserRegistration userRegistration = new UserRegistration();
+        boolean result = userRegistration.validatePasswordRule4("Password1");
         Assertions.assertFalse(result);
     }
 }

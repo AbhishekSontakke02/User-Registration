@@ -28,4 +28,8 @@ public class UserRegistration {
     public boolean validatePasswordRule3(String password) {
         return password.matches(".*[0-9].*");
     }
+
+    public boolean validatePasswordRule4(String password) {
+        return password.matches("^(?=.*[!@#$%^&*(),.?\":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{8,}$");
+    }
 }
