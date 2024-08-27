@@ -10,7 +10,7 @@ public class UserRegistration {
     }
 
     public boolean validateEmail(String email) {
-        return email.matches("^[a-zA-Z0-9]+(?:[._%+-][a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z]{2,})+$");
+        return email.matches("^[a-zA-Z0-9]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
     public boolean validateMobileNumber(String mobileNumber) {
@@ -38,5 +38,19 @@ public class UserRegistration {
                 validatePasswordRule2(password) &&
                 validatePasswordRule3(password) &&
                 validatePasswordRule4(password);
+    }
+
+    public String validateUserDtls(String fName, String lName,String email,String pass,String mobNo) {
+        if( validateFirstName(fName)&&
+            validateLastName(lName)&&
+            validateEmail(email)&&
+            validateMobileNumber(mobNo)&&
+            validatePassword(pass)
+                ){
+            System.out.println("test");
+                return "happy";
+        } else {
+            return "sad";
+        }
     }
 }

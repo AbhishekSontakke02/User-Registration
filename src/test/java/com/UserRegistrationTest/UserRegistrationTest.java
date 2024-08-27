@@ -36,7 +36,7 @@ public class UserRegistrationTest {
     @Test
     public void givenEmail_whenValid_shouldReturnTrue() {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validateEmail("abc+100@gmail.com");
+        boolean result = userRegistration.validateEmail("abc@gmail.com.com");
         Assertions.assertTrue(result);
     }
 
@@ -134,5 +134,19 @@ public class UserRegistrationTest {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validatePassword("Pass1!");
         Assertions.assertFalse(result);
+    }
+
+    @Test
+    public void givenUserDetails_whenValid_ShouldReturnHappy() {
+        UserRegistration userRegistration = new UserRegistration();
+        String result = userRegistration.validateUserDtls("Abhi","Sontakke","abc+100@gmail.com","Password1!","91 9919819801");
+        Assertions.assertEquals("happy",result);
+    }
+
+    @Test
+    public void givenUserDetails_whenInvalid_ShouldReturnSad() {
+        UserRegistration userRegistration = new UserRegistration();
+        String result = userRegistration.validateUserDtls("ab","so","abc()*@gmail.com","pass1","919919819801");
+        Assertions.assertEquals("sad",result);
     }
 }
