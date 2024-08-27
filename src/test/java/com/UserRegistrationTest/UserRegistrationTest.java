@@ -3,6 +3,11 @@ package com.UserRegistrationTest;
 import com.UserRegistration.UserRegistration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 public class UserRegistrationTest {
     @Test
@@ -149,4 +154,19 @@ public class UserRegistrationTest {
         String result = userRegistration.validateUserDtls("ab","so","abc()*@gmail.com","pass1","919919819801");
         Assertions.assertEquals("sad",result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "abc@yahoo.com, true",
+            "abc111@abc.com, true",
+            "abc.100@abc.com.au, true",
+            "abc()*@gmail.com, false",
+            "abc@%*.com, false",
+            "abc..2002@gmail.com, false"
+    })
+    void givenEmailAsVar_shouldReturnAsPerExpectedResult(String email, boolean expectedResult) {
+        UserRegistration userRegistration = new UserRegistration();
+        Assertions.assertEquals(expectedResult, userRegistration.validateEmail(email));
+    }
+
 }
