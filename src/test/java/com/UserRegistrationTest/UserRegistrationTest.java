@@ -1,5 +1,6 @@
 package com.UserRegistrationTest;
 
+import com.UserRegistration.InvalidUserDtlsException;
 import com.UserRegistration.UserRegistration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,59 +12,64 @@ import java.util.Collection;
 
 public class UserRegistrationTest {
     @Test
-    public void givenFirstName_whenValid_shouldReturnTrue() {
+    public void givenFirstName_whenValid_shouldReturnTrue() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validateFirstName("Abhi");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenFirstName_whenInvalid_shouldReturnFalse() {
+    public void givenFirstName_whenInvalid_shouldReturnFalse() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validateFirstName("ab");
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(InvalidUserDtlsException.class,() ->{
+            userRegistration.validateFirstName("ab");
+        });
+//        Assertions.assertFalse(result);
     }
 
     @Test
-    public void givenLastName_whenValid_shouldReturnTrue() {
+    public void givenLastName_whenValid_shouldReturnTrue() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validateLastName("Sontakke");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenLastName_WhenInvalid_shouldReturnFalse() {
+    public void givenLastName_WhenInvalid_shouldReturnFalse() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validateLastName("so");
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(InvalidUserDtlsException.class,()->{
+            userRegistration.validateLastName("so");
+        });
     }
 
     @Test
-    public void givenEmail_whenValid_shouldReturnTrue() {
+    public void givenEmail_whenValid_shouldReturnTrue() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validateEmail("abc@gmail.com.com");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenEmail_whenInvalid_shouldReturnFalse() {
+    public void givenEmail_whenInvalid_shouldReturnFalse() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validateEmail("abc()*@gmail.com");
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(InvalidUserDtlsException.class, ()->{
+            userRegistration.validateEmail("abc()*@gmail.com");
+        });
     }
 
     @Test
-    public void givenMobileNumber_whenValid_shouldReturnTrue() {
+    public void givenMobileNumber_whenValid_shouldReturnTrue() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validateMobileNumber("91 9919819801");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenMobileNumber_whenInvalid_shouldReturnFalse() {
+    public void givenMobileNumber_whenInvalid_shouldReturnFalse() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validateMobileNumber("919919819801");
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(InvalidUserDtlsException.class,()->{
+            userRegistration.validateMobileNumber("919919819801");
+        });
     }
 
     // Password Rule 1 Test
@@ -128,31 +134,33 @@ public class UserRegistrationTest {
 
     // Full Password Validation Test
     @Test
-    public void givenPassword_whenAllRulesPassed_shouldReturnTrue() {
+    public void givenPassword_whenAllRulesPassed_shouldReturnTrue() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         boolean result = userRegistration.validatePassword("Password1!");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenPassword_whenAnyRuleFails_shouldReturnFalse() {
+    public void givenPassword_whenAnyRuleFails_shouldReturnFalse() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        boolean result = userRegistration.validatePassword("Pass1!");
-        Assertions.assertFalse(result);
+        Assertions.assertThrows(InvalidUserDtlsException.class,()->{
+            userRegistration.validatePassword("Pass1!");
+        });
     }
 
     @Test
-    public void givenUserDetails_whenValid_ShouldReturnHappy() {
+    public void givenUserDetails_whenValid_ShouldReturnHappy() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         String result = userRegistration.validateUserDtls("Abhi","Sontakke","abc+100@gmail.com","Password1!","91 9919819801");
         Assertions.assertEquals("happy",result);
     }
 
     @Test
-    public void givenUserDetails_whenInvalid_ShouldReturnSad() {
+    public void givenUserDetails_whenInvalid_ShouldReturnSad() throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
-        String result = userRegistration.validateUserDtls("ab","so","abc()*@gmail.com","pass1","919919819801");
-        Assertions.assertEquals("sad",result);
+        Assertions.assertThrows(InvalidUserDtlsException.class, () ->{
+            userRegistration.validateUserDtls("ab","so","abc()*@gmail.com","pass1","919919819801");
+        });
     }
 
     @ParameterizedTest
@@ -160,13 +168,23 @@ public class UserRegistrationTest {
             "abc@yahoo.com, true",
             "abc111@abc.com, true",
             "abc.100@abc.com.au, true",
-            "abc()*@gmail.com, false",
-            "abc@%*.com, false",
-            "abc..2002@gmail.com, false"
     })
-    void givenEmailAsVar_shouldReturnAsPerExpectedResult(String email, boolean expectedResult) {
+    void givenEmailAsVar_shouldReturnAsPerExpectedResult(String email, boolean expectedResult) throws InvalidUserDtlsException {
         UserRegistration userRegistration = new UserRegistration();
         Assertions.assertEquals(expectedResult, userRegistration.validateEmail(email));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "abc()*@gmail.com",
+            "abc@%*.com",
+            "abc..2002@gmail.com"
+    })
+    void givenEmailAsVar_ShouldReturnExceptionAsInvalidEmail(String email){
+        UserRegistration userRegistration = new UserRegistration();
+        Assertions.assertThrows(InvalidUserDtlsException.class, ()->{
+            userRegistration.validateEmail(email);
+        });
     }
 
 }
